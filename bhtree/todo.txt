@@ -1,0 +1,2 @@
+時間計測
+g++ -O3 BHtree.cpp -o BHtree.o でコンパイルすれば最適化可能x
