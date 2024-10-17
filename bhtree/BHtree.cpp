@@ -2,7 +2,7 @@
 #include <math.h>
 #include <iostream>
 
-#include "BHtree.h"
+#include "bhtree.h"
 
 #define NO_MORE_FREE_NODE_ERROR -1
 
@@ -50,4 +50,14 @@ void BHnode::create_tree_recursive(BHnode*& heap_top,int& heap_reminder){
 	for(int i=0;i<8;i++) child[i]=NULL;
 	particle* p=pfirst;
 	for(int i=0;i<nparticle;i++){
-		particle* pnext
+		particle* pnext=p->next;
+		int subindex=childindex(p->pos,cpos);
+		assign_child(subindex,heap_top,heap_reminder);
+		child[subindex]->nparticle++;
+		p->next=child[subindex]->pfirst;
+		child[subindex]->pfirst=p;
+		p->next;
+	}
+	for(int i=0;i<8;i++){
+		if(child[i]!=NULL){
+			if(child[i]->nparticle>1)
