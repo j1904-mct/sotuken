@@ -7,7 +7,7 @@
 #PGCLIB     =  -L$(PGPLOT_DIR) -lcpgplot -lpgplot -lm  -L/usr/X11R6/lib -lX11 -lg2c
 #PGLIB     =  -L$(PGPLOT_DIR)   -lpgplot -L/usr/X11R6/lib  -lX11
 HEADERS = vector.h particle.h BHtree.h
-CCC = g++ -Wall $(PGCFLAGS)
+CCC = g++ -O3 -Wall $(PGCFLAGS)
 
 BHtreetest: BHtree.C $(HEADERS)
 	$(CCC) -o BHtreetest -DTREETEST BHtree.C
