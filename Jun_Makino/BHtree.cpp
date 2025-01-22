@@ -20,7 +20,7 @@
 #define real double
 #include "BHtree.h"
 
-#define TREETEST
+//#define TREETEST
 
 void bhnode::assign_root(myvector root_pos, real length, particle * p, int np){
 	pos = root_pos;
