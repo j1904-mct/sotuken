@@ -21,3 +21,5 @@ treecode: treecode.o BHtree.o
 	$(CCC) -o  treecode  treecode.o BHtree.o $(PGCLIB)
 mk_plummer: mk_plummer.C
 	$(CCC) -o  mk_plummer   mk_plummer.C
+Sotuken: BHtree.C $(HEADERS)
+	$(CCC) -o Sotuken -DSOTUKEN BHtree.C
