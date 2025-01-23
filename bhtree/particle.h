@@ -1,7 +1,7 @@
 #ifndef _PARTICLE_H
 #define _PARTICLE_H
 
-#include vector3D.h
+#include "vector3D.h"
 ////////////////////////////
 //nbody-particle:basic class for simple nbody implementation
 //J.Makino 1998/11/29

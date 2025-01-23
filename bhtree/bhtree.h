@@ -30,9 +30,7 @@ class BHnode{
 		BHnode(){
 			cpos=0.0;
 			l=0.0;
-			for(int i=0;i<8;i++){
-				child[i]=NULL;
-			}
+			for(int i=0;i<8;i++) child[i]=NULL;
 			pfirst=NULL;
 			nparticle=0;
 			pos=0.0;
@@ -103,7 +101,7 @@ void BHnode::assign_child(int subindex,BHnode*& heap_top,int& heap_remainder){
 		child[subindex]=heap_top;
 		heap_top++;
 		heap_reminder--;
-		child[subindex]->cpos=cpos+myvector(((subindex&4)*0.5-1)*l/4,((subindex&2)-1)*l/4, ((subindex&1)*2-1)*l\4);
+		child[subindex]->cpos=cpos+myvector(((subindex&4)*0.5-1)*l/4,((subindex&2)-1)*l/4, ((subindex&1)*2-1)*l/4);
 		child[subindex]->l=l*0.5;
 		child[subindex]->nparticle=0;
 	}
