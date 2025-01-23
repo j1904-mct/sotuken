@@ -31,11 +31,11 @@ typedef std::istream istream;
 //#include "stdinc.h"
 
 /*-----------------------------------------------------------------------------
- *  Vector3D  --  a class for 3-dimensional Vector3Ds
+ *  Vector3D  --  a class for 3-dimensional Vectors
  *-----------------------------------------------------------------------------
  */
 
-#define DIM 3;
+#define DIM 3
 const int ndim = 3;
 
 class Vector3D{
@@ -59,7 +59,7 @@ class Vector3D{
 		template<typename... Data>
 		Vector3D(Data... data){
 			int i=0;
-			for(double d: std:initializer_list<double>{data...}){
+			for(double d: std::initializer_list<double>{data...}){
 				this->element[i]=d;
 				i++;
 			}
@@ -106,9 +106,9 @@ class Vector3D{
 		Vector3D operator ^ (const Vector3D& b){
 //			return Vector3D(element[1]*b.element[2]-element[2]*b.element[1],element[2]*b.element[0]-element[0]*b.element[2],element[0]*b.element[1]-element[1]*b.element[0]);
 			Vector3D ret;
-			ret.x=this->element[1]*b.element[2]-this->element[2]*b.element[1];
-			ret.y=this->element[2]*b.element[0]-this->element[0]*b.element[2];
-			ret.z=this->element[0]*b.element[1]-this->element[1]*b.element[0];
+			ret.element[0]=this->element[1]*b.element[2]-this->element[2]*b.element[1];
+			ret.element[1]=this->element[2]*b.element[0]-this->element[0]*b.element[2];
+			ret.element[2]=this->element[0]*b.element[1]-this->element[1]*b.element[0];
 			return ret;
 		}
 
@@ -151,7 +151,7 @@ class Vector3D{
 		}
 
 		Vector3D& operator /= (const double b){
-		register double binv = 1.0/b;
+			register double binv = 1.0/b;
 			this->element[0] *= binv;
 			this->element[1] *= binv;
 			this->element[2] *= binv;

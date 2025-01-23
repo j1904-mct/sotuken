@@ -1,0 +1,187 @@
+In file included from bhtree.h:15,
+                 from BHtree.cpp:5:
+vector3D.h: In member function ‘Vector3D& Vector3D::operator/=(double)’:
+vector3D.h:154:41: warning: ISO C++17 does not allow ‘register’ storage class specifier [-Wregister]
+  154 |                         register double binv = 1.0/b;
+      |                                         ^~~~
+In file included from /usr/include/stdio.h:33,
+                 from /usr/include/c++/11/cstdio:42,
+                 from /usr/include/c++/11/ext/string_conversions.h:43,
+                 from /usr/include/c++/11/bits/basic_string.h:6608,
+                 from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/ostream:38,
+                 from /usr/include/c++/11/iostream:39,
+                 from BHtree.cpp:3:
+bhtree.h: In constructor ‘BHnode::BHnode()’:
+bhtree.h:33:55: error: no match for ‘operator=’ (operand types are ‘BHnode’ and ‘long int’)
+   33 |                         for(int i=0;i<8;i++) child[i]=NULL;
+      |                                                       ^~~~
+In file included from BHtree.cpp:5:
+bhtree.h:19:7: note: candidate: ‘constexpr BHnode& BHnode::operator=(const BHnode&)’
+   19 | class BHnode{
+      |       ^~~~~~
+bhtree.h:19:7: note:   no known conversion for argument 1 from ‘long int’ to ‘const BHnode&’
+bhtree.h:19:7: note: candidate: ‘constexpr BHnode& BHnode::operator=(BHnode&&)’
+bhtree.h:19:7: note:   no known conversion for argument 1 from ‘long int’ to ‘BHnode&&’
+bhtree.h: At global scope:
+bhtree.h:47:6: error: no declaration matches ‘void BHnode::assign_root(Vector3D, double, Particle*, int)’
+   47 | void BHnode::assign_root(Vector3D root_pos,double length,Particle* p,int np){
+      |      ^~~~~~
+bhtree.h:47:6: note: no functions named ‘void BHnode::assign_root(Vector3D, double, Particle*, int)’
+bhtree.h:19:7: note: ‘class BHnode’ defined here
+   19 | class BHnode{
+      |       ^~~~~~
+In file included from /usr/include/stdio.h:33,
+                 from /usr/include/c++/11/cstdio:42,
+                 from /usr/include/c++/11/ext/string_conversions.h:43,
+                 from /usr/include/c++/11/bits/basic_string.h:6608,
+                 from /usr/include/c++/11/string:55,
+                 from /usr/include/c++/11/bits/locale_classes.h:40,
+                 from /usr/include/c++/11/bits/ios_base.h:41,
+                 from /usr/include/c++/11/ios:42,
+                 from /usr/include/c++/11/ostream:38,
+                 from /usr/include/c++/11/iostream:39,
+                 from BHtree.cpp:3:
+bhtree.h: In member function ‘void BHnode::create_tree_recursive(BHnode*&, int&)’:
+bhtree.h:61:26: error: no match for ‘operator=’ (operand types are ‘BHnode’ and ‘long int’)
+   61 |                 child[i]=NULL;
+      |                          ^~~~
+In file included from BHtree.cpp:5:
+bhtree.h:19:7: note: candidate: ‘constexpr BHnode& BHnode::operator=(const BHnode&)’
+   19 | class BHnode{
+      |       ^~~~~~
+bhtree.h:19:7: note:   no known conversion for argument 1 from ‘long int’ to ‘const BHnode&’
+bhtree.h:19:7: note: candidate: ‘constexpr BHnode& BHnode::operator=(BHnode&&)’
+bhtree.h:19:7: note:   no known conversion for argument 1 from ‘long int’ to ‘BHnode&&’
+bhtree.h:67:17: error: ‘assign_child’ was not declared in this scope
+   67 |                 assign_child(subindex,heap_top,heap_remainder);
+      |                 ^~~~~~~~~~~~
+bhtree.h:68:32: error: base operand of ‘->’ has non-pointer type ‘BHnode’
+   68 |                 child[subindex]->nparticle++;
+      |                                ^~
+bhtree.h:69:40: error: base operand of ‘->’ has non-pointer type ‘BHnode’
+   69 |                 p->next=child[subindex]->pfirst;
+      |                                        ^~
+bhtree.h:70:32: error: base operand of ‘->’ has non-pointer type ‘BHnode’
+   70 |                 child[subindex]->pfirst=p;
+      |                                ^~
+bhtree.h:75:28: error: base operand of ‘->’ has non-pointer type ‘BHnode’
+   75 |                 if(child[i]->nparticle>1){
+      |                            ^~
+bhtree.h:76:33: error: base operand of ‘->’ has non-pointer type ‘BHnode’
+   76 |                         child[i]->create_tree_recursive(heap_top,heap_remainder);
+      |                                 ^~
+bhtree.h:78:33: error: base operand of ‘->’ has non-pointer type ‘BHnode’
+   78 |                         child[i]->pos=child[i]->pfirst->pos;
+      |                                 ^~
+bhtree.h:78:47: error: base operand of ‘->’ has non-pointer type ‘BHnode’
+   78 |                         child[i]->pos=child[i]->pfirst->pos;
+      |                                               ^~
+bhtree.h:79:33: error: base operand of ‘->’ has non-pointer type ‘BHnode’
+   79 |                         child[i]->mass=child[i]->pfirst->mass;
+      |                                 ^~
+bhtree.h:79:48: error: base operand of ‘->’ has non-pointer type ‘BHnode’
+   79 |                         child[i]->mass=child[i]->pfirst->mass;
+      |                                                ^~
+bhtree.h: At global scope:
+bhtree.h:95:6: error: no declaration matches ‘void BHnode::assign_child(int, BHnode*&, int&)’
+   95 | void BHnode::assign_child(int subindex,BHnode*& heap_top,int& heap_remainder){
+      |      ^~~~~~
+bhtree.h:95:6: note: no functions named ‘void BHnode::assign_child(int, BHnode*&, int&)’
+bhtree.h:19:7: note: ‘class BHnode’ defined here
+   19 | class BHnode{
+      |       ^~~~~~
+BHtree.cpp:13:6: error: no declaration matches ‘void BHnode::assign_root(Vector3D, double, Particle*, int)’
+   13 | void BHnode::assign_root(Vector3D root_pos,double length,Particle* p,int np){
+      |      ^~~~~~
+BHtree.cpp:13:6: note: no functions named ‘void BHnode::assign_root(Vector3D, double, Particle*, int)’
+In file included from BHtree.cpp:5:
+bhtree.h:19:7: note: ‘class BHnode’ defined here
+   19 | class BHnode{
+      |       ^~~~~~
+BHtree.cpp:34:6: error: no declaration matches ‘void BHnode::assign_child(int, BHnode*&, int&)’
+   34 | void BHnode::assign_child(int subindex,BHnode*& heap_top,int& heap_remainder){
+      |      ^~~~~~
+BHtree.cpp:34:6: note: no functions named ‘void BHnode::assign_child(int, BHnode*&, int&)’
+In file included from BHtree.cpp:5:
+bhtree.h:19:7: note: ‘class BHnode’ defined here
+   19 | class BHnode{
+      |       ^~~~~~
+BHtree.cpp:49:6: error: redefinition of ‘void BHnode::create_tree_recursive(BHnode*&, int&)’
+   49 | void BHnode::create_tree_recursive(BHnode*& heap_top,int& heap_reminder){
+      |      ^~~~~~
+In file included from BHtree.cpp:5:
+bhtree.h:59:6: note: ‘void BHnode::create_tree_recursive(BHnode*&, int&)’ previously defined here
+   59 | void BHnode::create_tree_recursive(BHnode*& heap_top,int& heap_remainder){
+      |      ^~~~~~
+BHtree.cpp: In function ‘void spc(int)’:
+BHtree.cpp:74:27: error: ‘cout’ was not declared in this scope; did you mean ‘std::cout’?
+   74 | for(int i=0;i<indent;i++) cout<<" ";
+      |                           ^~~~
+      |                           std::cout
+In file included from BHtree.cpp:3:
+/usr/include/c++/11/iostream:61:18: note: ‘std::cout’ declared here
+   61 |   extern ostream cout;          /// Linked to standard output
+      |                  ^~~~
+BHtree.cpp: At global scope:
+BHtree.cpp:77:6: error: no declaration matches ‘void BHnode::dump(int)’
+   77 | void BHnode::dump(int indent){
+      |      ^~~~~~
+BHtree.cpp:77:6: note: no functions named ‘void BHnode::dump(int)’
+In file included from BHtree.cpp:5:
+bhtree.h:19:7: note: ‘class BHnode’ defined here
+   19 | class BHnode{
+      |       ^~~~~~
+BHtree.cpp:102:6: error: no declaration matches ‘void BHnode::dumptree(int)’
+  102 | void BHnode::dumptree(int indent){
+      |      ^~~~~~
+BHtree.cpp:102:6: note: no functions named ‘void BHnode::dumptree(int)’
+In file included from BHtree.cpp:5:
+bhtree.h:19:7: note: ‘class BHnode’ defined here
+   19 | class BHnode{
+      |       ^~~~~~
+BHtree.cpp:134:5: error: no declaration matches ‘int BHnode::sanity_check()’
+  134 | int BHnode::sanity_check(){
+      |     ^~~~~~
+BHtree.cpp:134:5: note: no functions named ‘int BHnode::sanity_check()’
+In file included from BHtree.cpp:5:
+bhtree.h:19:7: note: ‘class BHnode’ defined here
+   19 | class BHnode{
+      |       ^~~~~~
+BHtree.cpp: In function ‘int main()’:
+BHtree.cpp:263:9: error: ‘create’ was not declared in this scope
+  263 |         create uniform_sphere(pp,n,0,rsize);
+      |         ^~~~~~
+BHtree.cpp:271:23: error: ‘nnodes’ was not declared in this scope; did you mean ‘nodes’?
+  271 |         bn=new BHnode[nnodes];
+      |                       ^~~~~~
+      |                       nodes
+BHtree.cpp:272:13: error: ‘class BHnode’ has no member named ‘assign_root’; did you mean ‘assignRoot’?
+  272 |         bn->assign_root(Vector3D(0.0),rsize*2,pp,n);
+      |             ^~~~~~~~~~~
+      |             assignRoot
+BHtree.cpp:276:17: error: ‘class BHnode’ has no member named ‘sanity_check’
+  276 |         PRL(bn->sanity_check());
+      |                 ^~~~~~~~~~~~
+BHtree.cpp:11:36: note: in definition of macro ‘PRL’
+   11 | #define PRL(x) std::cout<<#x<<"="<<x<<"\n"
+      |                                    ^
+BHtree.cpp:277:13: error: ‘class BHnode’ has no member named ‘set_cm_quantities’
+  277 |         bn->set_cm_quantities();
+      |             ^~~~~~~~~~~~~~~~~
+BHtree.cpp:278:13: error: ‘class BHnode’ has no member named ‘dump’
+  278 |         bn->dump;
+      |             ^~~~
+BHtree.cpp:280:9: error: ‘calculate_uncorrected_gravity_direct’ was not declared in this scope
+  280 |         calculate_uncorrected_gravity_direct(pp,n,eps2);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BHtree.cpp:285:17: error: ‘calculate_gravity_using_tree’ was not declared in this scope
+  285 |                 calculate_gravity_using_tree(p,bn,eps2,0.5);
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+BHtree.cpp:270:13: warning: unused variable ‘nodes’ [-Wunused-variable]
+  270 |         int nodes=n*2;
+      |             ^~~~~
+make: *** [makefile:5: BHtree] エラー 1
