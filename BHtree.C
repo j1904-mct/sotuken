@@ -322,7 +322,8 @@ int main(){
 #ifdef SOTUKEN
 int main(){
 	chrono::steady_clock::time_point begin,end;
-	chrono::microseconds time;
+//	chrono::microseconds time;
+	chrono::microseconds time_AR,time_CTR,time_SCQ,time_CGUT;
 
 	particle* pp;
 	int n;
@@ -338,22 +339,31 @@ int main(){
 	for(int j=0;j<=5;j++){
 		begin=chrono::steady_clock::now();
 		bn->assign_root(myvector(0.0),rsize*2,pp,n);
+		end=chrono::steady_clock::now();
+		time_AR=chrono::duration_cast<chrono::microseconds>(end-begin);
+
+		begin=chrono::steady_clock::now();
 		int heap_remainder=nnodes-1;
 		bhnode* btmp=bn+1;
 		bn->create_tree_recursive(btmp,heap_remainder);
-		//PRL(bn->sanity_check());
+		end=chrono::steady_clock::now();
+		time_CTR=chrono::duration_cast<chrono::microseconds>(end-begin);
+
+		begin=chrono::steady_clock::now();
 		bn->set_cm_quantities();
-	//	bn->dump();
-	//	calculate_uncorrected_gravity_direct(pp,n,eps2);
-	//	clear_acc_and_phi(pp,n);
+		end=chrono::steady_clock::now();
+		time_SCQ=chrono::duration_cast<chrono::microseconds>(end-begin);
+
+		begin=chrono::steady_clock::now();
 		particle* p=pp;
 		for(int i=0; i<n; i++){
 			calculate_gravity_using_tree(p,bn,eps2,0.5);
 			p++;
 		}
 		end=chrono::steady_clock::now();
-		time=chrono::duration_cast<chrono::microseconds>(end-begin);
-		cout<<j<<":"<<time.count()<<"μs"<<endl;
+		time_CGUT=chrono::duration_cast<chrono::microseconds>(end-begin);
+
+		cout<<j<<":"<<time_AR.count()<<"μs,"<<time_CTR.count()<<"μs,"<<time_SCQ.count()<<"μs,"<<time_CGUT.count()<<"μs"<<endl;
 	}
 /*
 	for(int j=0;j<5;j++){

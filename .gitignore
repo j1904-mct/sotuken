@@ -39,3 +39,4 @@ BHtree.o
 treecode.o
 treecode
 mk_plummer
+error.txt
