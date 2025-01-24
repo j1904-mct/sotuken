@@ -337,7 +337,7 @@ int main(){
 	bn=new bhnode[nnodes];
 	for(int j=0;j<=5;j++){
 		begin=chrono::steady_clock::now();
-		bn->assign_root(myvector(0.0),rsize*2,pp,n);	//kore
+		bn->assign_root(myvector(0.0),rsize*2,pp,n);
 		int heap_remainder=nnodes-1;
 		bhnode* btmp=bn+1;
 		bn->create_tree_recursive(btmp,heap_remainder);
