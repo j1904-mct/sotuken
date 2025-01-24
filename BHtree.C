@@ -333,27 +333,29 @@ int main(){
 	create_uniform_sphere(pp,n,0,rsize);
 	bhnode* bn=NULL;
 	int nnodes=n*2;
-	bn=new bhnode[nnodes];
-	bn->assign_root(myvector(0.0),rsize*2,pp,n);
-	int heap_remainder=nnodes-1;
-	bhnode* btmp=bn+1;
-	bn->create_tree_recursive(btmp,heap_remainder);
-	PRL(bn->sanity_check());
-	bn->set_cm_quantities();
-//	bn->dump();
 	double  eps2=0.01;
-	calculate_uncorrected_gravity_direct(pp,n,eps2);
-	clear_acc_and_phi(pp,n);
-	particle* p=pp;
-	begin=chrono::steady_clock::now();
-	for(int i=0; i<n; i++){
-		calculate_gravity_using_tree(p,bn,eps2,0.5);
-		p++;
+	bn=new bhnode[nnodes];
+	for(int j=0;j<=5;j++){
+		begin=chrono::steady_clock::now();
+		bn->assign_root(myvector(0.0),rsize*2,pp,n);	//kore
+		int heap_remainder=nnodes-1;
+		bhnode* btmp=bn+1;
+		bn->create_tree_recursive(btmp,heap_remainder);
+		//PRL(bn->sanity_check());
+		bn->set_cm_quantities();
+	//	bn->dump();
+	//	calculate_uncorrected_gravity_direct(pp,n,eps2);
+	//	clear_acc_and_phi(pp,n);
+		particle* p=pp;
+		for(int i=0; i<n; i++){
+			calculate_gravity_using_tree(p,bn,eps2,0.5);
+			p++;
+		}
+		end=chrono::steady_clock::now();
+		time=chrono::duration_cast<chrono::microseconds>(end-begin);
+		cout<<j<<":"<<time.count()<<"μs"<<endl;
 	}
-	end=chrono::steady_clock::now();
-	time=chrono::duration_cast<chrono::microseconds>(end-begin);
-	cout<<"init:"<<time.count()<<"μs"<<endl;
-
+/*
 	for(int j=0;j<5;j++){
 		clear_acc_and_phi(pp,n);
 		p=pp;
@@ -366,6 +368,7 @@ int main(){
 		time=chrono::duration_cast<chrono::microseconds>(end-begin);
 		cout<<j+1<<":"<<time.count()<<"μs"<<endl;
 	}
+*/
 	return 0;
 }
 #endif
