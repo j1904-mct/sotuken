@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+#objects
+BHtree
+Sotuken
+BHtreetest
+BHtree.o
+treecode.o
+treecode
+mk_plummer
