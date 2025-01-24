@@ -1,204 +1,187 @@
-#ifndef VECTOR_H
-#define VECTOR_H
+/*
+*  vector.h: 3D vector operations include file
+*.............................................................................
+*    version 1:  Dec 1992   Piet Hut, Steve McMillan, Jun Makino
+*    version 2:
+*.............................................................................
+*     This file includes:
+*  1) definition of class vector
+*.............................................................................
+*/
 
-/////////////////////
-//Vector: a class for VLEN-dimensional vectors
-//VLEN must be defined as constant before this header
-//created by MAKINO Junichiro
-//copy & make change by INATA Yusei
-//copy date:2024/6/13
-//copy from https://jun-makino.sakuraweb.com/kougi/keisan_tenmongakuII/index.html
-/////////////////////
+// This is slightly modified version of vector header file
+// taken from STARLAB
+// -- J. Makino
 
-#include <iosfwd>
-#include <iostream>
+///////////////////////////////////////////////////////////
+//Copied from https://jun-makino.sakuraweb.com/kougi/keisan_tenmongakuII/programs/simpletree/vector.h
+//Copied&Changed:Inata Yusei
+//Changed at 2024/06/19
+//Changed point: changed this to make it easier to read
+//               fixed to prevent compilation errors
+///////////////////////////////////////////////////////////
 
-typedef std::istream istream;
-typedef std::ostream ostream;
+#ifndef  STARLAB_VECTOR_H
+#define  STARLAB_VECTOR_H
+using namespace std;
 
-class Vector{
+#define vector myvector
+//#include "stdinc.h"
+
+/*-----------------------------------------------------------------------------
+*  vector  --  a class for 3-dimensional vectors
+*-----------------------------------------------------------------------------
+*/
+
+const int ndim = 3;
+
+class vector{
+	private:
+		double element[3];
+	//end private					//added comment by Inata Yusei
 	public:
-		double element[VLEN];
-
-		//constructor
-		Vector(double data=0){
-			for(int i=0;i<VLEN;i++){
-				this->element[i]=data;
-			}
-		}
-		Vector(double data[VLEN]){
-			for(int i=0;i<VLEN;i++){
-				this->element[i]=data[i];
-			}
+	//	Default: initialize to zero.
+		vector(double c = 0){
+			element[0] = element[1] = element[2] = c;
 		}
 
-		template<typename... Data>
-		Vector(Data... data){
-			int i=0;
-			for(double d: std::initializer_list<double>{data...}){
-				this->element[i]=d;
-				i++;
-			}
+		vector(double x, double y, double z){
+			element[0] = x;
+			element[1] = y;
+			element[2] = z;
 		}
-		double& operator [](int i){
+
+		//  []: the return type is declared as a reference (&), so that it can be used
+		//  on the left-hand side of an asignment, as well as on the right-hand side,
+		//  i.e.  v[1] = 3.14  and  x = v[2]  are both allowed and work as expected.
+
+		double & operator [] (int i) {
 			return element[i];
 		}
 
-		friend const Vector operator + (const Vector& v1,const Vector& v2);
-		friend const Vector operator - (const Vector& v1,const Vector& v2);
-		friend const double operator * (const Vector& v1,const Vector& v2);
-		friend const Vector operator * (const Vector& v,const double& d);
-		friend const Vector operator * (const Vector& v,const int& d);
-		friend const Vector operator / (const Vector& v,const double& d);
-		friend const Vector operator / (const Vector& v,const int& d);
+		inline void print() {
+		cout << element[0] << " " << element[1] << " "<< element[2] << std::endl;
+		}
+#ifdef PERIODIC
+// PERIODIC basic reajustment menber function
+		vector readjust(){
+			return vector(readjust_r(element[0]),readjust_r(element[1]),readjust_r(element[2]));
+		}
+#else
+		vector  readjust(){
+			return vector(*this);
+		}
+#endif
 
-		Vector& operator += (const Vector& v){
-			for(int i=0;i<VLEN;i++){
-				this->element[i]+=v.element[i];
-			}
+		//	Unary -
+
+		vector operator - (){
+			return vector(-element[0], -element[1], -element[2]);
+		}
+
+		//	Dot product.
+		double operator * (const vector& b){
+			return element[0]*b.element[0]+element[1]*b.element[1]+element[2]*b.element[2];
+		}
+
+		//	Outer product.
+		vector operator ^ (const vector &b){
+			return vector(element[1]*b.element[2] - element[2]*b.element[1],element[2]*b.element[0] - element[0]*b.element[2],element[0]*b.element[1] - element[1]*b.element[0]);
+		}
+
+		//	Vector +, -
+		vector operator + (const vector &b){
+			return vector(element[0]+b.element[0],element[1]+b.element[1],element[2]+b.element[2]);
+		}
+		vector operator - (const vector &b){
+			return vector(element[0]-b.element[0],element[1]-b.element[1],element[2]-b.element[2]);
+		}
+
+		friend vector operator + (double, const vector & );
+		friend vector operator + (const vector &, double);
+
+		//	Scalar *, /
+		friend vector operator * (double, const vector & );
+		friend vector operator * (const vector &, double);
+		friend vector operator / (const vector &, double);
+
+		//	Vector +=, -=, *=, /=
+
+		vector& operator += (const vector& b){
+			element[0] += b.element[0];
+			element[1] += b.element[1];
+			element[2] += b.element[2];
 			return *this;
 		}
 
-		Vector& operator -= (const Vector& v){
-			for(int i=0;i<VLEN;i++){
-				this->element[i]-=v.element[i];
-			}
+		vector& operator -= (const vector& b){
+			element[0] -= b.element[0];
+			element[1] -= b.element[1];
+			element[2] -= b.element[2];
 			return *this;
 		}
 
-		Vector& operator *= (const double d){
-			for(int i=0;i<VLEN;i++){
-				this->element[i]*=d;
-			}
-			return *this;
-		}
-		Vector& operator *= (const int d){
-			for(int i=0;i<VLEN;i++){
-				this->element[i]*=d;
-			}
-			return *this;
-		}
-		Vector& operator /= (const double d){
-			for(int i=0;i<VLEN;i++){
-				this->element[i]/=d;
-			}
-			return *this;
-		}
-		Vector& operator /= (const int d){
-			for(int i=0;i<VLEN;i++){
-				this->element[i]/=d;
-			}
+		vector& operator *= (const double b){
+			element[0] *= b;
+			element[1] *= b;
+			element[2] *= b;
 			return *this;
 		}
 
-		friend ostream& operator << (ostream& s,const Vector& v);
-		friend istream& operator >> (istream& s,Vector& v);
+		vector& operator /= (const double b){
+			double binv = 1.0/b;	//C++17:removed register keyword 	//Changed by Inata Yusei 
+			element[0] *= binv;
+			element[1] *= binv;
+			element[2] *= binv;
+			return *this;
+		}
 
+		//      Input / Output
+		friend ostream & operator << (ostream & , const vector & );
+		friend istream & operator >> (istream & , vector & );
 
-//		friend std::ostream& operator << (std::ostream& s,const Vector& v);
-//		friend std::istream& operator >> (std::istream& s,Vector& v);
-	//public end
+	//end public			//added by Inata Yusei
 };
 
-inline ostream& operator << (ostream& s,const Vector& v){
-	s<<"[";
-	for(int i=0;i<VLEN;i++){
-		if(i!=0){
-			s<<",";
-		}
-		s<<v.element[i];
-	}
-	s<<"]"<<std::endl;
+inline  ostream & operator << (ostream & s, const vector & v){
+	return s << v.element[0] << "  " << v.element[1]<< "  " << v.element[2];
+}
+
+inline  istream & operator >> (istream & s, vector & v){
+	s >> v.element[0] >> v.element[1] >> v.element[2];
 	return s;
 }
 
-inline istream& operator >> (istream& s,Vector& v){
-	for(int i=0;i<VLEN;i++){
-		s>>v.element[i];
-	}
-	return s;
+inline  double square(vector v){
+	return v*v;
+}
+inline  double abs(vector v){
+	return sqrt(v*v);
 }
 
-
-inline const Vector operator + (const Vector& v1,const Vector& v2){
-	Vector ret;
-	for(int i=0;i<VLEN;i++){
-		ret.element[i]=v1.element[i]+v2.element[i];
-	}
-	return ret;
+inline  vector operator + (double b, const vector & v){
+	return vector(b+v.element[0],b+v.element[1],b+v.element[2]);
 }
 
-inline const Vector operator - (const Vector& v1,const Vector& v2){
-	Vector ret;
-	for(int i=0;i<VLEN;i++){
-		ret.element[i]=v1.element[i]-v2.element[i];
-	}
-	return ret;
+inline  vector operator + (const vector & v, double b){
+	return vector(b+v.element[0],b+v.element[1],b+v.element[2]);
 }
 
-inline const double operator * (const Vector& v1,const Vector& v2){
-	double ret=0;
-	for(int i=0;i<VLEN;i++){
-		ret+=v1.element[i]*v2.element[2];
-	}
-	return ret;
+inline  vector operator * (double b, const vector & v){
+	return vector(b*v.element[0],b*v.element[1],b*v.element[2]);
 }
 
-inline const Vector operator * (const Vector& v,const double d){
-	Vector ret;
-	for(int i=0;i<VLEN;i++){
-		ret.element[i]=v.element[i]*d;
-	}
-	return ret;
+inline  vector operator * (const vector & v, double b){
+	return vector(b*v.element[0],b*v.element[1],b*v.element[2]);
 }
 
-inline const Vector operator * (const Vector& v,const int d){
-	Vector ret;
-	for(int i=0;i<VLEN;i++){
-		ret.element[i]=v.element[i]*d;
-	}
-	return ret;
+inline  vector operator / (const vector & v, double b){
+	return vector(v.element[0]/b,v.element[1]/b,v.element[2]/b);
 }
 
-inline const Vector operator / (const Vector& v,const double d){
-	Vector ret;
-	for(int i=0;i<VLEN;i++){
-		ret.element[i]=v.element[i]/d;
-	}
-	return ret;
-}
+#endif
 
-inline const Vector operator / (const Vector& v,const int d){
-	Vector ret;
-	for(int i=0;i<VLEN;i++){
-		ret.element[i]=v.element[i]/d;
-	}
-	return ret;
-}
-
-template<class head,class... tails>
-Vector grvPtTop(head vec1,tails... vecs){
-	int cnt=1;
-	Vector ret=grvPt(cnt,vec1,vecs...);
-	ret/=cnt;
-	return ret;
-}
-
-template<class head,class... tails>
-Vector grvPt(int& cnt,head vec1,tails... vecs){
-	Vector ret=grvPt(cnt,vecs...);
-	ret+=vec1;
-	cnt++;
-	return ret;
-}
-
-Vector grvPt(int& cnt,Vector v1,Vector v2){
-	Vector ret=v1+v2;
-	cnt++;
-	return ret;
-}
-
-typedef const Vector (vfunc)(const Vector&);
-
-#endif	//ifndef VECTOR_H
+//=======================================================================
+//  |  the end of:  |         /|\         |  inc/vector.h
+//========================= STARLAB =====================================
 
